@@ -1,0 +1,375 @@
+<title>Project Doc Blueprint</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one drawing sheet. Title block top right, detail callouts A to F stacked, 24px drafting grid behind solid panels. */
+:root {
+  --bg: #FAF9F5;
+  --panel: #FFFFFE;
+  --ink: #141413;
+  --ink-2: #5E5D59;
+  --line: #B0AEA5;
+  --grid: #EDEBE2;
+  --grid-major: #E1DED2;
+  --accent: #B4532F;
+  --accent-soft: #F3E2DA;
+  --ok: #4F7A2F;
+  --info: #3F66A0;
+  --warn: #A66A0E;
+  --bad: #A8352A;
+  --f-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141413; --panel: #1B1B19; --ink: #FAF9F5; --ink-2: #B0AEA5; --line: #55534E;
+    --grid: #1D1D1B; --grid-major: #272724; --accent: #E58E6F; --accent-soft: #3A2A23;
+    --ok: #9CC37A; --info: #9DBBE6; --warn: #E3B659; --bad: #EE8A7D;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141413; --panel: #1B1B19; --ink: #FAF9F5; --ink-2: #B0AEA5; --line: #55534E;
+  --grid: #1D1D1B; --grid-major: #272724; --accent: #E58E6F; --accent-soft: #3A2A23;
+  --ok: #9CC37A; --info: #9DBBE6; --warn: #E3B659; --bad: #EE8A7D;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  color: var(--ink);
+  font: 15px/1.55 var(--f-body);
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.sheet { max-width: 1080px; margin: 0 auto; display: grid; gap: 28px; }
+.mono { font-family: var(--f-mono); }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* header + title block */
+.head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 300px); gap: 20px; align-items: end; }
+@media (max-width: 760px) { .head { grid-template-columns: minmax(0, 1fr); } }
+.kicker { font: 500 12px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
+h1 { font: 700 clamp(44px, 9vw, 84px)/.92 var(--f-display); text-transform: uppercase; letter-spacing: .01em; margin: 0 0 16px; text-wrap: balance; }
+.thesis { font-size: 18px; max-width: 34em; margin: 0; color: var(--ink-2); }
+.thesis b { color: var(--ink); font-weight: 600; }
+.tb { background: var(--panel); border: 1.5px solid var(--ink); font: 400 12px/1.4 var(--f-mono); width: 100%; border-collapse: collapse; }
+.tb th, .tb td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tb tr:last-child th, .tb tr:last-child td { border-bottom: 0; }
+.tb th { width: 36%; font-weight: 500; color: var(--ink-2); text-transform: uppercase; letter-spacing: .08em; font-size: 10.5px; padding-top: 8px; }
+.tb td { overflow-wrap: anywhere; }
+
+/* detail callouts */
+.detail { background: var(--panel); border: 1.5px solid var(--ink); position: relative; padding: 22px clamp(16px, 3vw, 28px) 26px; }
+.detail::before, .detail::after { content: ""; position: absolute; width: 11px; height: 11px; border: 1.5px solid var(--accent); background: var(--panel); }
+.detail::before { top: -7px; left: -7px; }
+.detail::after { bottom: -7px; right: -7px; }
+.dh { display: flex; align-items: center; gap: 14px; margin: 0 0 6px; flex-wrap: wrap; }
+.dtag { font: 500 12px/1 var(--f-mono); border: 1.5px solid var(--accent); color: var(--accent); border-radius: 50%; width: 30px; height: 30px; display: grid; place-items: center; flex: none; }
+h2 { font: 600 clamp(24px, 4vw, 32px)/1.05 var(--f-display); text-transform: uppercase; letter-spacing: .03em; margin: 0; }
+.sub { margin: 0 0 20px; color: var(--ink-2); max-width: 60em; }
+.sub code, .cell code, td code { font-family: var(--f-mono); font-size: .9em; }
+
+/* A: workflow */
+.flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; counter-reset: s; }
+.flow.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cmds + .flow { margin-top: 18px; }
+.step { position: relative; border: 1.5px solid var(--ink); margin-right: -1.5px; padding: 14px 12px 14px; min-width: 0; }
+.step h3 { font: 600 19px/1 var(--f-display); text-transform: uppercase; letter-spacing: .05em; margin: 0 0 8px; }
+.step p { margin: 0; font-size: 13.5px; color: var(--ink-2); }
+.step .mode { display: block; font: 500 10.5px/1 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.step:not(:last-child)::after { content: ""; position: absolute; right: -7px; top: 50%; width: 12px; height: 12px; background: var(--panel); border-top: 1.5px solid var(--ink); border-right: 1.5px solid var(--ink); transform: translateY(-50%) rotate(45deg); z-index: 1; }
+.gate { margin-top: 18px; border: 1.5px dashed var(--warn); padding: 12px 14px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; align-items: baseline; }
+.gate b { font: 600 17px/1 var(--f-display); text-transform: uppercase; letter-spacing: .05em; color: var(--warn); }
+.gate span { color: var(--ink-2); font-size: 14px; }
+@media (max-width: 860px) {
+  .flow, .flow.three { grid-template-columns: minmax(0, 1fr); }
+  .step { margin-right: 0; margin-bottom: -1.5px; }
+  .step:not(:last-child)::after { right: auto; left: 28px; top: auto; bottom: -7px; transform: rotate(135deg); }
+  .gate { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* B: authorization */
+.tiers { display: grid; gap: 10px; }
+.tier { display: grid; grid-template-columns: 64px minmax(0, 1.1fr) minmax(0, 1.6fr) minmax(0, 1fr); border: 1.5px solid var(--ink); }
+.tier > div { padding: 12px 14px; min-width: 0; }
+.tier > div + div { border-left: 1px solid var(--line); }
+.tcode { font: 700 26px/1 var(--f-display); display: grid; place-items: center; color: var(--panel); background: var(--tc); letter-spacing: .02em; }
+.tier h3 { font: 600 18px/1.1 var(--f-display); text-transform: uppercase; letter-spacing: .05em; margin: 0 0 4px; color: var(--tc); }
+.tier p { margin: 0; font-size: 13.5px; color: var(--ink-2); }
+.tier .cfg { font: 400 12px/1.5 var(--f-mono); color: var(--ink-2); }
+.tier .cfg b { color: var(--ink); font-weight: 500; }
+.t0 { --tc: var(--ok); } .t1 { --tc: var(--ok); } .t2 { --tc: var(--info); } .t3 { --tc: var(--warn); } .t4 { --tc: var(--bad); }
+@media (max-width: 760px) {
+  .tier { grid-template-columns: 52px minmax(0, 1fr); }
+  .tier > div:nth-child(3), .tier > div:nth-child(4) { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); }
+}
+
+/* C: tree */
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 0 0 18px; font: 400 12px/1.4 var(--f-mono); color: var(--ink-2); }
+.legend i { display: inline-block; width: 26px; height: 12px; vertical-align: -2px; margin-right: 6px; border: 1.5px solid var(--ink); }
+.legend i.m { border-style: dashed; border-color: var(--line); }
+.tree { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 14px; }
+.folder { border: 1.5px solid var(--ink); min-width: 0; }
+.folder h3 { margin: 0; padding: 8px 12px; background: var(--ink); color: var(--panel); font: 500 12.5px/1.2 var(--f-mono); display: flex; justify-content: space-between; gap: 8px; }
+.folder h3 span { opacity: .75; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px; margin: 0; list-style: none; }
+.chips li { font: 400 11.5px/1 var(--f-mono); padding: 5px 7px; border: 1.5px solid var(--ink); overflow-wrap: anywhere; }
+.chips li.m { border: 1.5px dashed var(--line); color: var(--ink-2); }
+.chips li.k { background: var(--accent-soft); border-color: var(--accent); }
+.note { margin: 16px 0 0; font-size: 13.5px; color: var(--ink-2); }
+
+/* D: status */
+.status { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 12px; }
+.badge { border: 1.5px solid var(--ink); padding: 12px 14px; min-width: 0; }
+.badge h3 { font: 600 20px/1 var(--f-display); text-transform: uppercase; letter-spacing: .05em; margin: 0 0 6px; color: var(--sc); }
+.badge p { margin: 0 0 8px; font-size: 13.5px; color: var(--ink-2); }
+.badge .who { font: 400 11.5px/1.4 var(--f-mono); color: var(--ink); border-top: 1px solid var(--line); padding-top: 8px; display: block; }
+.s-c { --sc: var(--ok); } .s-p { --sc: var(--info); } .s-o { --sc: var(--warn); } .s-a { --sc: var(--accent); } .s-r { --sc: var(--bad); }
+
+/* E: rules */
+.rules { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 0 28px; }
+.rules li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.rules .rn { font: 500 12px/1.9 var(--f-mono); color: var(--accent); }
+.rules b { font-weight: 600; }
+
+/* F: start */
+.cmds { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 14px; }
+.cmd { border: 1.5px solid var(--ink); min-width: 0; }
+.cmd .lab { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 6px 6px 6px 12px; border-bottom: 1px solid var(--line); font: 500 11px/1 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.cmd pre { margin: 0; padding: 12px; overflow-x: auto; font: 400 12.5px/1.6 var(--f-mono); }
+button.copy { font: 500 11px/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; background: transparent; color: var(--ink); border: 1.5px solid var(--ink); padding: 7px 10px; cursor: pointer; }
+button.copy:hover { background: var(--ink); color: var(--panel); }
+.presets { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 13.5px; }
+.tw { overflow-x: auto; }
+.presets th, .presets td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.presets th { font: 500 11px/1.2 var(--f-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-2); border-bottom: 1.5px solid var(--ink); }
+.presets td:first-child { font-family: var(--f-mono); white-space: nowrap; }
+
+/* revisions */
+.rev { font: 400 12px/1.5 var(--f-mono); width: 100%; border-collapse: collapse; }
+.rev th, .rev td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.rev th { color: var(--ink-2); text-transform: uppercase; letter-spacing: .08em; font-weight: 500; font-size: 10.5px; border-bottom: 1.5px solid var(--ink); }
+@media (prefers-reduced-motion: no-preference) { button.copy { transition: background .12s, color .12s; } }
+</style>
+
+<div class="sheet">
+
+  <header class="head">
+    <div>
+      <p class="kicker">Engineering reference &middot; Rev 3.1</p>
+      <h1>Project Doc Blueprint</h1>
+      <p class="thesis"><b>Analyze first. Decide second. Document third.</b> Implement only when the task authorizes it. One starter kit for every project, and every agent that works on it.</p>
+    </div>
+    <table class="tb" aria-label="Drawing title block">
+      <tr><th>Drawing</th><td>Project Doc Blueprint</td></tr>
+      <tr><th>Revision</th><td>3.1 (supersedes 2.0)</td></tr>
+      <tr><th>Date</th><td>2026-10-22</td></tr>
+      <tr><th>Prepared by</th><td>Claude</td></tr>
+      <tr><th>Approval</th><td>Owner review pending</td></tr>
+    </table>
+  </header>
+
+  <section class="detail" aria-labelledby="a">
+    <div class="dh"><span class="dtag">A</span><h2 id="a">Workflow</h2></div>
+    <p class="sub">Every session runs in one named mode. README is written last so the index always matches the files.</p>
+    <ol class="flow">
+      <li class="step"><span class="mode">Mode: Inspect</span><h3>Inspect</h3><p>Read the repo, manifests, configs, tests, and existing docs. No writes.</p></li>
+      <li class="step"><span class="mode">Mode: Select</span><h3>Select</h3><p>Apply triggers. Classify each candidate Required, Recommended, Optional, or Not needed.</p></li>
+      <li class="step"><span class="mode">Mode: Document</span><h3>Create</h3><p>Core set first, then conditional docs. Unknowns stay Open; ideas stay Proposed.</p></li>
+      <li class="step"><span class="mode">Mode: Review</span><h3>Validate</h3><p>Headers, links, index coverage, secret patterns. Then check facts and diagrams by hand.</p></li>
+      <li class="step"><span class="mode">Mode: Document</span><h3>Report</h3><p>List what was created, decided, and still open. State which checks actually ran.</p></li>
+    </ol>
+    <div class="gate">
+      <b>Implement</b>
+      <span>A separate gate. Code changes happen only when the task says so, inside the authorization tiers below, followed by tests, doc updates, and a current-state entry.</span>
+    </div>
+  </section>
+
+  <section class="detail" aria-labelledby="b">
+    <div class="dh"><span class="dtag">B</span><h2 id="b">Authorization</h2></div>
+    <p class="sub">Five tiers decide what Claude does alone and what waits for the owner. <code>.claude/settings.json</code> enforces the matrix in <code>docs/security/authorization-matrix.md</code>.</p>
+    <div class="tiers">
+      <div class="tier t0"><div class="tcode">T0</div><div><h3>Read</h3><p>Autonomous</p></div><div><p>Read source, docs, and config. Run read-only commands. Never read secret values.</p></div><div class="cfg"><b>allow</b></div></div>
+      <div class="tier t1"><div class="tcode">T1</div><div><h3>Docs</h3><p>Autonomous</p></div><div><p>Create and edit <code>docs/</code>, README, and the master file.</p></div><div class="cfg"><b>allow</b></div></div>
+      <div class="tier t2"><div class="tcode">T2</div><div><h3>Code</h3><p>Only if the task authorizes implementation</p></div><div><p>Edit source in scope. Run tests, linters, and builds.</p></div><div class="cfg"><b>ask</b> in settings</div></div>
+      <div class="tier t3"><div class="tcode">T3</div><div><h3>Ask first</h3><p>Proposed decision, then owner approval</p></div><div><p>New dependency, third-party service, data flow, schema migration, CI/CD change, file deletion, privacy change.</p></div><div class="cfg"><b>ask</b> + entry in decisions.md</div></div>
+      <div class="tier t4"><div class="tcode">T4</div><div><h3>Forbidden</h3><p>Written owner approval only</p></div><div><p>Production deploy, secret handling, production data or permissions, weakening security, destructive operations.</p></div><div class="cfg"><b>deny</b> by default</div></div>
+    </div>
+  </section>
+
+  <section class="detail" aria-labelledby="c">
+    <div class="dh"><span class="dtag">C</span><h2 id="c">Document tree</h2></div>
+    <p class="sub">67 templates and a selection log in nine folders. A project keeps only what its triggers call for; the rest is consolidated or omitted and logged in <code>selection-log.md</code>.</p>
+    <p class="legend"><span><i></i>standalone by default</span><span><i class="m"></i>merged into another doc by default</span></p>
+    <div class="tree">
+      <div class="folder"><h3>docs/core <span>9</span></h3><ul class="chips">
+        <li class="k">project-intake</li><li class="k">instructions</li><li class="k">agents</li><li class="k">current-state</li><li class="k">decisions</li><li class="k">prd</li><li class="k">glossary</li><li class="k">status-labels</li><li class="k">selection-log</li></ul></div>
+      <div class="folder"><h3>docs/product <span>11</span></h3><ul class="chips">
+        <li>idea</li><li>research</li><li class="m">define-the-user</li><li>user-journeys</li><li>admin-journeys</li><li>app-flow</li><li>demo</li><li>roadmap</li><li class="m">iteration</li><li>content-guidelines</li><li>file-content-format</li></ul></div>
+      <div class="folder"><h3>docs/architecture <span>8</span></h3><ul class="chips">
+        <li>architecture</li><li>technology</li><li>backend-schema</li><li>api</li><li>project-structure</li><li>background-jobs</li><li>scheduled-tasks</li><li>rejected-options</li></ul></div>
+      <div class="folder"><h3>docs/design <span>4</span></h3><ul class="chips">
+        <li>design-system</li><li class="m">design</li><li>accessibility</li><li>ui-architecture</li></ul></div>
+      <div class="folder"><h3>docs/web <span>6</span></h3><ul class="chips">
+        <li>site-brief</li><li>information-architecture</li><li>seo</li><li>performance</li><li>analytics-privacy</li><li>launch-checklist</li></ul></div>
+      <div class="folder"><h3>docs/ai <span>4</span></h3><ul class="chips">
+        <li>agent-setup</li><li>prompt-registry</li><li>loop-contract</li><li>workflow-graph</li></ul></div>
+      <div class="folder"><h3>docs/engineering <span>10</span></h3><ul class="chips">
+        <li>code-style</li><li>development</li><li class="m">setup</li><li>testing</li><li class="m">qa-testing</li><li>code-review</li><li>known-issues</li><li class="m">critical-bugs</li><li>task-breakdown</li><li>control-spec</li></ul></div>
+      <div class="folder"><h3>docs/security <span>11</span></h3><ul class="chips">
+        <li class="k">authorization-matrix</li><li>security</li><li>auth</li><li>data-security</li><li>threat-model</li><li class="m">attack-surface</li><li>secrets</li><li>security-checklist</li><li>security-review</li><li>critical-security-exposures</li><li>incident-response</li></ul></div>
+      <div class="folder"><h3>docs/operations <span>5</span></h3><ul class="chips">
+        <li>deployment</li><li class="m">preview-deployment</li><li class="m">production-deployment</li><li>monitoring</li><li class="m">operations</li></ul></div>
+    </div>
+    <p class="note">Highlighted files are always created. <code>README.md</code> sits at the project root and is generated last.</p>
+  </section>
+
+  <section class="detail" aria-labelledby="d">
+    <div class="dh"><span class="dtag">D</span><h2 id="d">Knowledge status</h2></div>
+    <p class="sub">Every document carries one header status. Individual statements carry their own label, plus the kind of evidence behind them.</p>
+    <div class="status">
+      <div class="badge s-c"><h3>Confirmed</h3><p>Verified by the owner or by authoritative project evidence.</p><span class="who">Set by Claude, citing the source</span></div>
+      <div class="badge s-p"><h3>Proposed</h3><p>A recommendation that nobody has approved yet.</p><span class="who">Set by Claude</span></div>
+      <div class="badge s-o"><h3>Open</h3><p>Missing, uncertain, or waiting on a decision.</p><span class="who">Set by Claude</span></div>
+      <div class="badge s-a"><h3>Accepted</h3><p>A proposal the owner explicitly approved.</p><span class="who">Owner only</span></div>
+      <div class="badge s-r"><h3>Rejected</h3><p>Considered and declined, with the reason on record.</p><span class="who">Owner, with reason</span></div>
+    </div>
+  </section>
+
+  <section class="detail" aria-labelledby="e">
+    <div class="dh"><span class="dtag">E</span><h2 id="e">Ten rules</h2></div>
+    <p class="sub">These apply to every project, every session.</p>
+    <ol class="rules">
+      <li><span class="rn">R1</span><span><b>One subject per file.</b> One home per fact; link instead of copying.</span></li>
+      <li><span class="rn">R2</span><span><b>Explicit status.</b> Label what is Confirmed, Proposed, or Open.</span></li>
+      <li><span class="rn">R3</span><span><b>Never invent facts.</b> No made-up schemas, endpoints, approvals, or test results.</span></li>
+      <li><span class="rn">R4</span><span><b>Protect secrets.</b> Names and policies only, never values.</span></li>
+      <li><span class="rn">R5</span><span><b>Keep decision history.</b> Supersede an entry; never overwrite it.</span></li>
+      <li><span class="rn">R6</span><span><b>Update current-state.md</b> at the end of every substantive session.</span></li>
+      <li><span class="rn">R7</span><span><b>Approve dependencies and data flows</b> before adding them.</span></li>
+      <li><span class="rn">R8</span><span><b>Stay maintainable.</b> About 4 KB is a prompt to review, not a limit.</span></li>
+      <li><span class="rn">R9</span><span><b>No empty docs.</b> Say what is unknown and what would settle it.</span></li>
+      <li><span class="rn">R10</span><span><b>Preserve the project.</b> Don't restructure code to fit the docs.</span></li>
+    </ol>
+  </section>
+
+  <section class="detail" aria-labelledby="f">
+    <div class="dh"><span class="dtag">F</span><h2 id="f">Start a project</h2></div>
+    <p class="sub">Copy the kit into a new folder, then generate only the documents the project needs.</p>
+    <div class="cmds">
+      <div class="cmd"><div class="lab"><span>Scaffold</span><button class="copy" type="button" data-target="c1">Copy</button></div>
+<pre id="c1">python scaffold.py init --name "My App" \
+  --preset web-app --out ../my-app</pre></div>
+      <div class="cmd"><div class="lab"><span>Custom triggers</span><button class="copy" type="button" data-target="c2">Copy</button></div>
+<pre id="c2">python scaffold.py init --name "My App" \
+  --triggers ui,db,auth,sensitive --also setup</pre></div>
+      <div class="cmd"><div class="lab"><span>Check</span><button class="copy" type="button" data-target="c3">Copy</button></div>
+<pre id="c3">python scaffold.py validate</pre></div>
+      <div class="cmd"><div class="lab"><span>Refresh index</span><button class="copy" type="button" data-target="c4">Copy</button></div>
+<pre id="c4">python scaffold.py readme</pre></div>
+      <div class="cmd"><div class="lab"><span>Document graph</span><button class="copy" type="button" data-target="c5">Copy</button></div>
+<pre id="c5">python scaffold.py graph</pre></div>
+    </div>
+    <div class="tw"><table class="presets">
+      <thead><tr><th>Preset</th><th>Intended for</th><th>Triggers</th></tr></thead>
+      <tbody>
+        <tr><td>minimal</td><td>Core documents only</td><td>none</td></tr>
+        <tr><td>web-app</td><td>Sites and front-end apps</td><td>ui, content, arch, tech, layout, style, devsetup, testing, deploy, plan, flows</td></tr>
+        <tr><td>api</td><td>Services with data and credentials</td><td>arch, tech, db, api, auth, sensitive, secrets, devsetup, testing, pr, deploy, monitoring, plan</td></tr>
+        <tr><td>site</td><td>Default for new projects: websites built by agents</td><td>web-app set plus site, seo, analytics, agentic</td></tr>
+        <tr><td>full</td><td>Every trigger, with merged docs consolidated</td><td>all 36</td></tr>
+        <tr><td>all</td><td>Every template standalone, as in this kit</td><td>all 36</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">The validator checks headers, links, index coverage, and obvious secret patterns. It cannot judge whether a Confirmed claim has real evidence.</p>
+  </section>
+
+  <section class="detail" aria-labelledby="g">
+    <div class="dh"><span class="dtag">G</span><h2 id="g">Name only to site</h2></div>
+    <p class="sub">Give the kit a project name and an agent with web search. Three fresh sessions take it from a name to a reviewed build, and every handoff is a file.</p>
+    <div class="cmds">
+      <div class="cmd"><div class="lab"><span>Create the project folder</span><button class="copy" type="button" data-target="c6">Copy</button></div>
+<pre id="c6">python scaffold.py new "My Project"</pre></div>
+      <div class="cmd"><div class="lab"><span>Only the prompt, to attach anywhere</span><button class="copy" type="button" data-target="c7">Copy</button></div>
+<pre id="c7">python scaffold.py prompt "My Project" \
+  --details "audience, goals, links" \
+  --out my-project-prompt.md</pre></div>
+    </div>
+    <ol class="flow three">
+      <li class="step"><span class="mode">Session 1 &middot; Research</span><h3>Generate</h3><p>Give the agent <code>PROMPT-GENERATOR.md</code>. It researches the name, logs every source, and writes <code>research/</code> and <code>BUILD-PROMPT.md</code>.</p></li>
+      <li class="step"><span class="mode">Session 2 &middot; Build</span><h3>Build</h3><p>Fresh context, give it <code>BUILD-PROMPT.md</code>. It works in verified loops and reads and writes <code>memory/</code>.</p></li>
+      <li class="step"><span class="mode">Session 3 &middot; Review</span><h3>Review</h3><p>Fresh context again, with the adversarial review prompt. It reports findings and fixes nothing.</p></li>
+    </ol>
+    <div class="gate"><b>Needs</b><span>Session 1 needs web search and file write. Without web access the agent says so and stops at an Open-item skeleton rather than guessing.</span></div>
+  </section>
+
+  <section class="detail" aria-labelledby="h">
+    <div class="dh"><span class="dtag">H</span><h2 id="h">Agents</h2></div>
+    <p class="sub">One universal <code>AGENTS.md</code>, thin adapters on top, and shared memory in plain files. Facts below come from each agent's own documentation, read on 2026-10-20 and 2026-10-21.</p>
+    <div class="tw"><table class="presets">
+      <thead><tr><th>Agent</th><th>Loads</th><th>Permissions</th><th>Own memory</th></tr></thead>
+      <tbody>
+        <tr><td>Claude Code</td><td><code>CLAUDE.md</code>, which imports <code>AGENTS.md</code></td><td><code>.claude/settings.json</code>; deny, then ask, then allow; first match wins</td><td>Auto memory, Claude only</td></tr>
+        <tr><td>OpenCode</td><td><code>AGENTS.md</code>, plus files listed in <code>opencode.json</code></td><td><code>opencode.json</code>; last matching rule wins</td><td>Not documented on the pages read</td></tr>
+        <tr><td>Hermes</td><td>First match of <code>.hermes.md</code>, <code>AGENTS.md</code>, <code>CLAUDE.md</code></td><td>Not verified</td><td><code>~/.hermes/memories/</code></td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">The kit's <code>memory/</code> folder is what every agent shares. Rule order differs between Claude Code and OpenCode, so don't copy one permission file into the other without reordering.</p>
+  </section>
+
+  <section class="detail" aria-labelledby="i">
+    <div class="dh"><span class="dtag">I</span><h2 id="i">Playbooks, prompts, memory</h2></div>
+    <p class="sub">Reference knowledge, ready-to-attach prompts, and the working memory an agent keeps.</p>
+    <div class="tree">
+      <div class="folder"><h3>playbooks/ <span>9</span></h3><ul class="chips">
+        <li class="k">prompt-engineering</li><li class="k">loop-engineering</li><li class="k">graph-engineering</li><li>context-and-memory</li><li>evals-and-verification</li><li>research-protocol</li><li>site-building-standards</li><li>agent-compatibility</li><li>00-index</li></ul></div>
+      <div class="folder"><h3>prompts/ <span>10</span></h3><ul class="chips">
+        <li class="k">00-project-prompt-generator</li><li>01-build-master-prompt</li><li>02-audit-existing-project</li><li>03-design-direction</li><li>04-content-and-seo</li><li>05-adversarial-review</li><li>06-loop-runner</li><li>07-graph-orchestrator</li><li>08-session-handoff</li><li>00-index</li></ul></div>
+      <div class="folder"><h3>memory/ <span>5</span></h3><ul class="chips">
+        <li>state.json</li><li>progress-log</li><li>lessons</li><li>open-questions</li><li>README</li></ul></div>
+    </div>
+    <p class="note">Highlighted files are the prompt, loop, and graph engineering playbooks and the project-name generator.</p>
+  </section>
+
+  <section class="detail" aria-labelledby="j">
+    <div class="dh"><span class="dtag">J</span><h2 id="j">Revisions</h2></div>
+    <div class="tw"><table class="rev">
+      <thead><tr><th>Rev</th><th>Date</th><th>Change</th></tr></thead>
+      <tbody>
+        <tr><td>2.0</td><td>2026-10-10</td><td>Original Claude Project Instructions: ten rules, document catalog, onboarding procedure.</td></tr>
+        <tr><td>3.0</td><td>2026-10-20</td><td>Restructured master file, operating modes, authorization tiers, settings template, scaffold and validate tool, this guide.</td></tr>
+        <tr><td>3.1</td><td>2026-10-21</td><td>Universal AGENTS.md with Claude Code and OpenCode adapters, shared memory folder, prompt, loop, and graph engineering playbooks, project-name prompt generator, <code>new</code>, <code>prompt</code>, and <code>graph</code> commands, web and AI doc templates.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+</div>
+
+<script>
+document.querySelectorAll("button.copy").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var el = document.getElementById(btn.dataset.target);
+    var text = el.textContent;
+    function done() { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1400); }
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(el);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = "Selected"; setTimeout(function () { btn.textContent = "Copy"; }, 1400);
+    }
+    try {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } catch (e) { fallback(); }
+  });
+});
+</script>

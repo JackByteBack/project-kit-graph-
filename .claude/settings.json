@@ -1,0 +1,43 @@
+{
+  "$comment": "Starter permissions implementing the authorization tiers in docs/security/authorization-matrix.md. Review and tighten per project.",
+  "permissions": {
+    "allow": [
+      "Read(./**)",
+      "Glob",
+      "Grep",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(ls:*)",
+      "Bash(python scaffold.py validate)",
+      "Bash(python scaffold.py list)",
+      "Edit(./docs/**)",
+      "Write(./docs/**)",
+      "Edit(./README.md)",
+      "Write(./README.md)"
+    ],
+    "ask": [
+      "Edit(./src/**)",
+      "Write(./src/**)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(pip install:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Edit(./.github/**)",
+      "Write(./.github/**)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./**/*.pem)",
+      "Read(./**/*.key)",
+      "Bash(rm -rf:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Bash(git push --force:*)",
+      "Bash(*deploy*)"
+    ]
+  }
+}

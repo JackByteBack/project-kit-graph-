@@ -1,0 +1,27 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "shadcn": {
+      "type": "local",
+      "command": ["npx", "shadcn@latest", "mcp"],
+      "enabled": false
+    },
+    "figma": {
+      "type": "remote",
+      "url": "https://mcp.figma.com/mcp",
+      "oauth": {},
+      "enabled": false
+    },
+    "21st": {
+      "type": "remote",
+      "url": "https://21st.dev/api/mcp",
+      "headers": { "x-api-key": "{env:TWENTY_FIRST_API_KEY}" },
+      "enabled": false
+    },
+    "rea": {
+      "type": "local",
+      "command": ["npx", "-y", "rea-agents@6.7.0", "mcp"],
+      "enabled": false
+    }
+  }
+}

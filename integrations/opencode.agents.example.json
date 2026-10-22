@@ -1,0 +1,35 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "researcher": {
+      "description": "Researches a project from its name, logs sources, and writes research files. Does not write code.",
+      "mode": "subagent",
+      "prompt": "{file:./prompts/00-project-prompt-generator.md}",
+      "permission": {
+        "edit": "ask",
+        "bash": "deny",
+        "webfetch": "allow",
+        "websearch": "allow"
+      }
+    },
+    "builder": {
+      "description": "Builds the project in verified iterations from BUILD-PROMPT.md. Asks before anything beyond T2.",
+      "mode": "primary",
+      "permission": {
+        "edit": "ask",
+        "bash": "ask",
+        "webfetch": "ask"
+      }
+    },
+    "reviewer": {
+      "description": "Independent adversarial reviewer. Reports findings and never edits source.",
+      "mode": "subagent",
+      "prompt": "{file:./prompts/05-adversarial-review.md}",
+      "permission": {
+        "edit": "deny",
+        "bash": "ask",
+        "webfetch": "deny"
+      }
+    }
+  }
+}

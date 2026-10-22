@@ -1,0 +1,28 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "docs/core/status-labels.md",
+    "docs/security/authorization-matrix.md"
+  ],
+  "permission": {
+    "*": "ask",
+    "edit": "ask",
+    "webfetch": "ask",
+    "doom_loop": "deny",
+    "external_directory": "ask",
+    "bash": {
+      "*": "ask",
+      "git status": "allow",
+      "git status *": "allow",
+      "ls": "allow",
+      "git diff *": "allow",
+      "git log *": "allow",
+      "ls *": "allow",
+      "python scaffold.py validate *": "allow",
+      "python scaffold.py list *": "allow",
+      "rm *": "deny",
+      "curl *": "deny",
+      "wget *": "deny"
+    }
+  }
+}

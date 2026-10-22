@@ -1,0 +1,10 @@
+{
+  "project": "Project Name",
+  "created": "2026-10-21",
+  "phase": "intake",
+  "mode": "DOCUMENT",
+  "last_verified_commit": null,
+  "checks": {},
+  "open_task_ids": [],
+  "notes": "Overwrite each session. Never store secrets or personal data."
+}

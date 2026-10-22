@@ -1,0 +1,22 @@
+{
+  "_comment": "COPY-ONLY EXAMPLE. Not loaded by any agent. Copy only the entries the owner approved into .mcp.json and delete this key. Syntax follows vendor docs read 2026-10-22; the http entries are Open until tested in your Claude Code version. Never put a real key in a committed file.",
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"]
+    },
+    "figma": {
+      "type": "http",
+      "url": "https://mcp.figma.com/mcp"
+    },
+    "21st": {
+      "type": "http",
+      "url": "https://21st.dev/api/mcp",
+      "headers": { "x-api-key": "YOUR_21ST_API_KEY" }
+    },
+    "rea": {
+      "command": "npx",
+      "args": ["-y", "rea-agents@6.7.0", "mcp"]
+    }
+  }
+}
